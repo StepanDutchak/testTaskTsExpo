@@ -1,8 +1,18 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
+import "react-native-gesture-handler";
+
+import { LogBox, StyleSheet, Text, View } from "react-native";
 import Navigation from "./src/navigation";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useEffect } from "react";
 
 export default function App() {
-  return <Navigation />;
+  useEffect(() => {
+    LogBox.ignoreAllLogs(true);
+  }, []);
+
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Navigation />
+    </GestureHandlerRootView>
+  );
 }

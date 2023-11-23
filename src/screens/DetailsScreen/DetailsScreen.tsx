@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import React, { useRef, useState } from "react";
+import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import { RouteProp } from "@react-navigation/native";
+import BottomSheet from "@gorhom/bottom-sheet";
 
 import { RootStackParamList } from "../../types/navigation";
-import Header from "../../components/base/Header/Header";
 import AnimatedPress from "../../components/base/AnimatedPress/AnimatedPress";
-import InfoModal from "../../components/modals/InfoModal/InfoModal";
 
 import { styles } from "./styles";
 
@@ -19,13 +18,22 @@ const text = {
   header: "Details",
   helpTextTop: "Measurement Information",
   helpTextBottom: "Understanding Your Measurements?",
+  modalText: "Modal info",
 };
 
 const disabledField = "Id";
 
 const DetailsScreen = ({ route }: InfoModalType) => {
-  const [isInfoModal, setInfoModal] = useState(false);
+  const [isSheetExpanded, setIsSheetExpanded] = useState(false);
+
   const { detailsData } = route.params;
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const openBottomSheet = () => {
+    bottomSheetRef.current?.expand();
+    setIsSheetExpanded(true);
+  };
 
   const renderInfoRows = () => {
     return Object.entries(detailsData).map(([key, value]: any, index) => {
@@ -38,11 +46,11 @@ const DetailsScreen = ({ route }: InfoModalType) => {
         <>
           {formattedKey !== disabledField && (
             <View
+              key={formattedKey}
               style={[
                 styles.rowContainer,
                 formattedKey === "Wellness Score" && styles.lastElement,
               ]}
-              key={value}
             >
               <View key={value} style={styles.row}>
                 <Text style={styles.keyText}>{formattedKey}</Text>
@@ -60,7 +68,6 @@ const DetailsScreen = ({ route }: InfoModalType) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* <Header isGoBack title={text.header} /> */}
       <View style={styles.content}>
         <View style={styles.cardContent}>{renderInfoRows()}</View>
         <View style={styles.helpContainer}>
@@ -68,7 +75,7 @@ const DetailsScreen = ({ route }: InfoModalType) => {
             <Text style={styles.topText}>{text.helpTextTop}</Text>
           </View>
           <AnimatedPress
-            onPress={() => setInfoModal(true)}
+            onPress={openBottomSheet}
             style={styles.bottomContainer}
           >
             <Text>{text.helpTextBottom}</Text>
@@ -76,7 +83,19 @@ const DetailsScreen = ({ route }: InfoModalType) => {
           </AnimatedPress>
         </View>
       </View>
-      <InfoModal onClose={setInfoModal} visible={isInfoModal} />
+      {isSheetExpanded && (
+        <BottomSheet
+          style={styles.bottomSheetContent}
+          ref={bottomSheetRef}
+          index={0}
+          enablePanDownToClose
+          snapPoints={[200, 400, 600]}
+        >
+          <View>
+            <Text>{text.modalText}</Text>
+          </View>
+        </BottomSheet>
+      )}
     </SafeAreaView>
   );
 };

@@ -35,6 +35,13 @@ export const styles = StyleSheet.create({
     marginBottom: 0,
     borderBottomWidth: 0,
   },
+
+  bottomSheetContent: {
+    paddingHorizontal: 12,
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 12,
+  },
   topContainer: {
     padding: 15,
     borderColor: "rgba(0, 0, 0, 0.1)",

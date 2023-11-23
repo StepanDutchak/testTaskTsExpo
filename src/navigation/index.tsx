@@ -10,6 +10,11 @@ const Stack = createNativeStackNavigator();
 const headerColor = "#797979";
 const headerColorText = "#FFFF";
 
+const text = {
+  headerHomeScreen: "Fitness Score",
+  headerDetailsScreen: "Details",
+};
+
 const Navigation = () => {
   return (
     <NavigationContainer>
@@ -24,7 +29,7 @@ const Navigation = () => {
         <Stack.Screen
           options={{
             headerTintColor: headerColorText,
-            title: "Fitness Score",
+            title: text.headerHomeScreen,
             headerTitleAlign: "center",
           }}
           name={routes.HOME_SCREEN}
@@ -33,8 +38,8 @@ const Navigation = () => {
         <Stack.Screen
           options={{
             headerTitleAlign: "center",
-            headerTintColor: headerColorText, // Set the color for this screen's back icon and text
-            title: "Details", // Set your custom title here
+            headerTintColor: headerColorText,
+            title: text.headerDetailsScreen,
           }}
           name={routes.DETAILS_SCREEN}
           component={DetailsScreen}

@@ -1,7 +1,6 @@
-import React from "react";
-import { View, Text, Modal } from "react-native";
+import React, { useRef } from "react";
+import { View, Animated, Modal as RNModal, PanResponder } from "react-native";
 import { styles } from "./styles";
-import AnimatedPress from "../../base/AnimatedPress/AnimatedPress";
 
 interface InfoModalType {
   visible: boolean;
@@ -9,39 +8,46 @@ interface InfoModalType {
 }
 
 const InfoModal = ({ visible, onClose }: InfoModalType) => {
-  const handleCloseModal = () => {
-    onClose(false);
-  };
+  const translateY = useRef(new Animated.Value(0)).current;
 
-  const renderInfoRows = () => {
-    return (
-      <>
-        <View style={styles.rowContainer}>
-          <View style={styles.row}>
-            <Text style={styles.keyText}>Modal Info</Text>
-            <Text style={styles.valueText}>Modal Info</Text>
-          </View>
-        </View>
-      </>
-    );
-  };
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponderCapture: (_, gestureState) =>
+        Math.abs(gestureState.dy) > 2,
+      onPanResponderMove: (_, gestureState) => {
+        if (gestureState.dy > 0) {
+          translateY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        if (gestureState.dy > 100) {
+          onClose(false);
+        } else {
+          Animated.spring(translateY, {
+            toValue: 0,
+            useNativeDriver: false,
+          }).start();
+        }
+      },
+    })
+  ).current;
 
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
+    <RNModal
       visible={visible}
-      onRequestClose={handleCloseModal}
+      transparent
+      animationType="slide"
+      onRequestClose={() => onClose(false)}
     >
-      <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
-          {renderInfoRows()}
-          <AnimatedPress style={styles.closeButton} onPress={handleCloseModal}>
-            <Text style={styles.closeButtonText}>close</Text>
-          </AnimatedPress>
+      <Animated.View
+        style={[styles.modalContent, { transform: [{ translateY }] }]}
+        {...panResponder.panHandlers}
+      >
+        <View style={styles.header}>
+          <View style={styles.handle} />
         </View>
-      </View>
-    </Modal>
+      </Animated.View>
+    </RNModal>
   );
 };
 

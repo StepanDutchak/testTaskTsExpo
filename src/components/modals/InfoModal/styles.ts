@@ -1,59 +1,40 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
   modalContent: {
+    flex: 1,
     backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
-    width: "80%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  header: {
     alignItems: "center",
+    padding: 16,
+  },
+  handle: {
+    width: 40,
+    height: 4,
+    backgroundColor: "#ccc",
+    borderRadius: 2,
+  },
+  content: {
+    flex: 1,
+    padding: 16,
   },
   rowContainer: {
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    padding: 16,
     borderBottomWidth: 1,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    marginVertical: 5, // Adjust this value for the desired vertical space
+    borderBottomColor: "#ccc",
   },
   row: {
-    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
-    marginVertical: 5, // Adjust this value for the desired vertical space
   },
   keyText: {
-    fontWeight: "bold",
     fontSize: 16,
-    color: "#333",
+    fontWeight: "bold",
   },
   valueText: {
     fontSize: 16,
-    color: "#666",
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#ccc",
-    marginBottom: 10,
-  },
-  closeButton: {
-    borderColor: "rgba(0, 0, 0, 0.1)",
-    borderWidth: 1,
-    paddingVertical: 5,
-    paddingHorizontal: 30,
-    borderRadius: 5,
-    marginTop: 20,
-  },
-  closeButtonText: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
