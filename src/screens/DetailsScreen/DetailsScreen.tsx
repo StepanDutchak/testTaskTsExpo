@@ -42,14 +42,14 @@ const DetailsScreen = ({ route }: InfoModalType) => {
                 styles.rowContainer,
                 formattedKey === "Wellness Score" && styles.lastElement,
               ]}
-              key={key}
+              key={value}
             >
-              <View style={styles.row}>
+              <View key={value} style={styles.row}>
                 <Text style={styles.keyText}>{formattedKey}</Text>
                 <Text style={styles.valueText}>{value}</Text>
               </View>
               {index < Object.keys(detailsData).length - 1 && (
-                <View style={styles.separator} />
+                <View key={detailsData} style={styles.separator} />
               )}
             </View>
           )}

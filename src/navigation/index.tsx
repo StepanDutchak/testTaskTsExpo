@@ -23,14 +23,16 @@ const Navigation = () => {
       >
         <Stack.Screen
           options={{
-            headerTintColor: headerColorText, // Set the color for this screen's back icon and text
-            title: "Fitness Score", // Set your custom title here
+            headerTintColor: headerColorText,
+            title: "Fitness Score",
+            headerTitleAlign: "center",
           }}
           name={routes.HOME_SCREEN}
           component={HomeScreen}
         />
         <Stack.Screen
           options={{
+            headerTitleAlign: "center",
             headerTintColor: headerColorText, // Set the color for this screen's back icon and text
             title: "Details", // Set your custom title here
           }}
